@@ -1,4 +1,6 @@
+
+import {Testimonial} from "@/types/testimonial.types"
 export interface TestimonialCardProps{
-    testimonial: any;
+    testimonial: Testimonial
     index: number
 }
