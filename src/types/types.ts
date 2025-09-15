@@ -92,33 +92,6 @@ export type Database = {
           },
         ]
       }
-      comments: {
-        Row: {
-          content: string
-          course_id: number | null
-          created_at: string
-          id: number
-          rating: number
-          user_id: string
-        }
-        Insert: {
-          content: string
-          course_id?: number | null
-          created_at?: string
-          id?: number
-          rating: number
-          user_id: string
-        }
-        Update: {
-          content?: string
-          course_id?: number | null
-          created_at?: string
-          id?: number
-          rating?: number
-          user_id?: string
-        }
-        Relationships: []
-      }
       courses: {
         Row: {
           category_id: number
@@ -249,6 +222,48 @@ export type Database = {
             columns: ["course_id"]
             isOneToOne: false
             referencedRelation: "courses"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      testimonials: {
+        Row: {
+          content: string
+          course_id: string | null
+          created_at: string
+          id: number
+          rating: number
+          user_id: string
+        }
+        Insert: {
+          content: string
+          course_id?: string | null
+          created_at?: string
+          id?: number
+          rating: number
+          user_id: string
+        }
+        Update: {
+          content?: string
+          course_id?: string | null
+          created_at?: string
+          id?: number
+          rating?: number
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "testimonials_course_id_fkey"
+            columns: ["course_id"]
+            isOneToOne: false
+            referencedRelation: "courses"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "testimonials_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
             referencedColumns: ["id"]
           },
         ]
