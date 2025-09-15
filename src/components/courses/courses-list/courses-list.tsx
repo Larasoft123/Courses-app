@@ -6,8 +6,8 @@ export function CourseList({ courses }: { courses: Course[] }) {
         <ul>
             {
                 courses.map((course, index) => (
-                    <li>
-                        <CourseCard key={course.id} course={course} index={index} />
+                    <li key={course.id}>
+                        <CourseCard course={course} index={index} />
                     </li>
                 ))
             }
