@@ -1,34 +1,12 @@
 import TestimonialCard from "./testimonial-card/testimonial-card"
+import { Testimonial } from "@/types/testimonial.types"
 
 
-const testimonials = [
-    {
-        id: 1,
-        name: "Sarah Chen",
-        role: "AI Engineer at TechCorp",
-        content:
-            "The AI course completely transformed my career. The hands-on projects and expert mentorship helped me land my dream job in just 6 months.",
-        rating: 5,
-    },
-    {
-        id: 2,
-        name: "Marcus Rodriguez",
-        role: "Blockchain Developer",
-        content:
-            "Outstanding curriculum and real-world applications. I built my first DApp during the course and now I'm working on revolutionary blockchain projects.",
-        rating: 5,
-    },
-    {
-        id: 3,
-        name: "Emily Watson",
-        role: "Data Scientist",
-        content:
-            "The instructors are industry leaders who provide invaluable insights. The community support and networking opportunities are incredible.",
-        rating: 5,
-    },
-]
+
 
 export function TestimonialsSection() {
+
+    const testimonials: Testimonial[] = []
     return (
         <section id="testimonials" className="py-20 ">
             <div className="container mx-auto px-4">
