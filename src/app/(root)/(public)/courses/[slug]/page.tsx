@@ -1,5 +1,5 @@
 import { Clock, GraduationCap, UsersRound } from "lucide-react"
-import { Card, CardHeader, CardContent, } from "@/components/ui/card"
+import { Card, CardContent, } from "@/components/ui/card"
 import { getCourseBySlug } from "@/lib/api/get-course-by-slug"
 import Link from "next/link"
 import {
@@ -36,9 +36,6 @@ export default async function CoursePage({ params }: {
 
     return (
         <CourseGrid>
-
-
-
             <div className="row-span-1 flex w-full items-end lg:col-span-4">
                 <Card className="w-full">
                     <CardContent className="flex justify-between items-center">
