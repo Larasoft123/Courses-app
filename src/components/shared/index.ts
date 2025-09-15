@@ -1,1 +1,6 @@
 export * from "./gradient-background"
+export * from "./video"
+export * from "./course-grid-big-container"
+export * from "./course-grid-footer"
+export * from "./course-grid"
+export * from "./course-grid-lateral"
