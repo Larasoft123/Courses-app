@@ -22,16 +22,16 @@ export default function TestimonialCard({ testimonial, index }: TestimonialCardP
 
                 <div className="flex items-center gap-4">
                     <Avatar className="h-12 w-12 border-2 border-primary/20">
-                        <AvatarImage src={testimonial.avatar || "/placeholder.svg"} alt={testimonial.name} />
+                        <AvatarImage src={testimonial.avatar_url || "/placeholder.svg"} alt={`Image of ${testimonial.full_name}`} />
                         <AvatarFallback className="bg-primary/20 text-primary">
-                            {testimonial.name
+                            {testimonial.full_name
                                 .split(" ")
                                 .map((n) => n[0])
                                 .join("")}
                         </AvatarFallback>
                     </Avatar>
                     <div>
-                        <h4 className="font-semibold text-foreground">{testimonial.name}</h4>
+                        <h4 className="font-semibold text-foreground">{testimonial.full_name}</h4>
                         <p className="text-sm text-muted-foreground">{testimonial.role}</p>
                     </div>
                 </div>
