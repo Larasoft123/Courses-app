@@ -6,7 +6,7 @@ export async function getCourseBySlug(slug: string) {
         const course = await supabase.from("courses").select("*,chapters(*),levels(name),categories(name)").eq("slug", slug).single()
         
         
-        return course
+        return course.data
     } catch (error) {
         return null
         
