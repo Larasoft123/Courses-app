@@ -1,6 +1,18 @@
-import { Clock } from "lucide-react"
-import { Card, CardHeader, CardContent } from "@/components/ui/card"
+import { Clock, GraduationCap, UsersRound } from "lucide-react"
+import { Card, CardHeader, CardContent, } from "@/components/ui/card"
 import { getCourseBySlug } from "@/lib/api/get-course-by-slug"
+import Link from "next/link"
+import {
+    Breadcrumb,
+    BreadcrumbItem,
+    BreadcrumbLink,
+    BreadcrumbList,
+    BreadcrumbPage,
+    BreadcrumbSeparator,
+} from "@/components/ui/breadcrumb"
+import { Badge } from "@/components/ui/badge"
+import { Button } from "@/components/ui/button"
+import { CourseGrid, CourseGridBigContainer, Video, CourseGridFooter, CourserGridLaterl } from "@/components/shared"
 
 
 export default async function CoursePage({ params }: {
@@ -14,46 +26,108 @@ export default async function CoursePage({ params }: {
         return <div>curso no existe</div>
 
     }
-    const { } = course
+    const { name, introduction_video_url, chapters, duration, description, levels, categories, image_url, students, price, } = course
+
+
+
 
 
 
 
     return (
-        <section className="h-full relative container mx-auto w-full min-h-screen py-28 grid md:grid-cols-5  md:grid-rows-8 gap-4 grid-cols-1">
+        <CourseGrid>
 
-            <div className="col-span-4">
-                <Card className="">
+
+
+            <div className="row-span-1 flex w-full items-end lg:col-span-4">
+                <Card className="w-full">
                     <CardContent className="flex justify-between items-center">
-                        <h1 className="text-4xl font-bebas">{slug}</h1>
-                        <span className="bg-accent inline-flex justify-center items-center rounded-full px-4 py-2 gap-4 text-sm font-medium text-white">
-                            <Clock className="w-4 h-4" />
-                            1h
-                        </span>
+
+                        <Breadcrumb>
+                            <BreadcrumbList>
+                                <BreadcrumbItem>
+                                    <BreadcrumbLink asChild>
+                                        <Link href="/">Home</Link>
+                                    </BreadcrumbLink>
+                                </BreadcrumbItem>
+                                <BreadcrumbSeparator />
+                                <BreadcrumbItem>
+                                    <BreadcrumbLink asChild>
+                                        <Link href="/courses">courses</Link>
+                                    </BreadcrumbLink>
+                                </BreadcrumbItem>
+                                <BreadcrumbSeparator />
+                                <BreadcrumbItem>
+                                    <BreadcrumbPage>{slug}</BreadcrumbPage>
+                                </BreadcrumbItem>
+                            </BreadcrumbList>
+                        </Breadcrumb>
+
+
+                        <div className="flex items-center justify-end flex-wrap gap-3">
+                            <Badge className="px-4.5 inline-flex gap-2 items-center py-2.5 rounded-full" variant={"secondary"}>
+                                <Clock className="w-4 h-4" />
+                                {duration} Hours
+                            </Badge>
+                            <Badge className="px-4.5 inline-flex gap-2 items-center py-2.5 rounded-full" variant={"secondary"}>
+                                <GraduationCap className="w-4 h-4" />
+                                {levels.name}
+                            </Badge>
+
+
+                            <Badge className="px-4.5 inline-flex gap-2 items-center py-2.5 rounded-full" variant={"secondary"}>
+                                <UsersRound className="w-4 h-4" />
+                                {students}
+                            </Badge>
+
+
+                            <Badge className="px-4.5 inline-flex gap-2 items-center py-2.5 rounded-full" variant={"secondary"}>
+                                <GraduationCap className="w-4 h-4" />
+                                {categories.name}
+                            </Badge>
+
+
+
+
+
+
+                        </div>
                     </CardContent>
                 </Card>
             </div>
-            <div className="row-span-full col-start-5">
-                <Card className="w-full h-full">
-                    <CardHeader>dsafd</CardHeader>
-                </Card>
-            </div>
-
-            <div className="col-span-4 row-span-4 row-start-2">
-                <Card className="h-full">
 
 
+            <CourserGridLaterl title="Capitulos">
+                <ul>
+                    {chapters.map((chapter, idx) => (
+                        <Link href={`/courses/${slug}/${chapter.id}`} key={chapter.id}>
+                            <li className="p-4 hover:bg-slate-900 text-slate-200 hover:text-cyan-300 transition-colors duration-300 rounded-lg px-2 py-1 cursor-pointer">
+                                <span className="text-lg text-balance leading-3 tracking-wider "> {idx + 1}. {chapter.title}</span>
+                            </li>
+                        </Link>
+                    ))}
+                </ul>
+            </CourserGridLaterl>
 
-                </Card>
-            </div>
+
+            <CourseGridBigContainer>
+                <Video src={introduction_video_url} />
+            </CourseGridBigContainer>
 
 
-            <div className="col-span-4 row-span-3">
-                <Card className="h-full"></Card>
-            </div>
+            <CourseGridFooter src={image_url} title={name} price={price} description={description} >
+                <Button className="text-xl w-full">
+                    Enroll Now
+                </Button>
+            </CourseGridFooter>
 
 
 
-        </section>
+
+
+
+
+
+        </CourseGrid>
     )
 }
