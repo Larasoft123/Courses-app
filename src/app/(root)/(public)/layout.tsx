@@ -7,7 +7,9 @@ export default function PublicLayout({ children }: { children: React.ReactNode }
             <Header />
             <div className="min-h-dvh w-full relative md:p-10">
                 <GradientBackground />
-                {children}
+                <main>
+                    {children}
+                </main>
             </div>
             <Footer />
         </div>
