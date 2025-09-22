@@ -5,14 +5,14 @@ import { MyCoursesModel } from "@/lib/api/get-my-courses"
 
 export async function MyCourses() {
     const courses = await MyCoursesModel.getMyCourses()
-    console.log(courses);
+
 
 
 
     return (
         <Card>
             <CardHeader>
-                <CardTitle>My Courses</CardTitle>
+                <CardTitle>My courses</CardTitle>
             </CardHeader>
 
             <CardContent>
