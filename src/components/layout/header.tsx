@@ -3,6 +3,7 @@ import Link from "next/link"
 import { createClient } from '@/utils/supabase/server'
 import { LogoutButton } from "@/components/auth"
 
+
 export async function Header() {
     const supabase = await createClient()
     const { data: user } = await supabase.auth.getUser()
@@ -22,18 +23,18 @@ export async function Header() {
                 </div>
 
                 <nav className="hidden md:flex items-center space-x-8">
-                    <a href="#courses" className="text-foreground hover:text-primary transition-colors">
+                    <Link href="/courses" className="text-foreground hover:text-primary transition-colors">
                         Courses
-                    </a>
-                    <a href="#about" className="text-foreground hover:text-primary transition-colors">
+                    </Link>
+                    <Link href="/about" className="text-foreground hover:text-primary transition-colors">
                         About
-                    </a>
-                    <a href="#testimonials" className="text-foreground hover:text-primary transition-colors">
+                    </Link>
+                    <Link href="/testimonials" className="text-foreground hover:text-primary transition-colors">
                         Reviews
-                    </a>
-                    <a href="#contact" className="text-foreground hover:text-primary transition-colors">
+                    </Link>
+                    <Link href="/contact" className="text-foreground hover:text-primary transition-colors">
                         Contact
-                    </a>
+                    </Link>
                 </nav>
 
 
