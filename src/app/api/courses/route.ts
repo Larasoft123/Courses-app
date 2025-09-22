@@ -7,17 +7,27 @@ export async function GET(req:NextRequest) {
     try {
         const supabase = await createClient()
 
-        const {data,error} = await supabase.from("courses").select("id,created_at,name,slug,price,students,duration,image_url,description, levels(name),categories(name), chapters(count)")
-   
+ 
+        
+        const { data, error } = await supabase
+        .rpc('get_courses')
+
 
         if (error || !data){
             return NextResponse.json({error})
         }
+
+
+  
+  
+        
         
 
         return NextResponse.json(data)
         
     } catch (error) {
+        console.log(error);
+        return NextResponse.json({error: "internal server error"})
         
     }
     
