@@ -2,18 +2,10 @@ import { Clock, GraduationCap, UsersRound } from "lucide-react"
 import { Card, CardContent, } from "@/components/ui/card"
 import { getCourseBySlug } from "@/lib/api/get-course-by-slug"
 import Link from "next/link"
-import {
-    Breadcrumb,
-    BreadcrumbItem,
-    BreadcrumbLink,
-    BreadcrumbList,
-    BreadcrumbPage,
-    BreadcrumbSeparator,
-} from "@/components/ui/breadcrumb"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import { CourseGrid, CourseGridBigContainer, Video, CourseGridFooter, CourserGridLaterl } from "@/components/shared"
-
+import { Breadcumb } from "@/components/shared"
 
 export default async function CoursePage({ params }: {
     params: Promise<{ slug: string }>
@@ -36,29 +28,12 @@ export default async function CoursePage({ params }: {
 
     return (
         <CourseGrid>
+
             <div className="row-span-1 flex w-full items-end lg:col-span-4">
                 <Card className="w-full">
                     <CardContent className="flex justify-between items-center">
+                        <Breadcumb slug={slug} chapterTitle={undefined} />
 
-                        <Breadcrumb>
-                            <BreadcrumbList>
-                                <BreadcrumbItem>
-                                    <BreadcrumbLink asChild>
-                                        <Link href="/">Home</Link>
-                                    </BreadcrumbLink>
-                                </BreadcrumbItem>
-                                <BreadcrumbSeparator />
-                                <BreadcrumbItem>
-                                    <BreadcrumbLink asChild>
-                                        <Link href="/courses">courses</Link>
-                                    </BreadcrumbLink>
-                                </BreadcrumbItem>
-                                <BreadcrumbSeparator />
-                                <BreadcrumbItem>
-                                    <BreadcrumbPage>{slug}</BreadcrumbPage>
-                                </BreadcrumbItem>
-                            </BreadcrumbList>
-                        </Breadcrumb>
 
 
                         <div className="flex items-center justify-end flex-wrap gap-3">
@@ -88,6 +63,8 @@ export default async function CoursePage({ params }: {
 
 
 
+
+
                         </div>
                     </CardContent>
                 </Card>
@@ -95,7 +72,7 @@ export default async function CoursePage({ params }: {
 
 
             <CourserGridLaterl title="Capitulos">
-                <ul>
+                <ul className="flex flex-col gap-4">
                     {chapters.map((chapter, idx) => (
                         <Link href={`/courses/${slug}/${chapter.id}`} key={chapter.id}>
                             <li className="p-4 hover:bg-slate-900 text-slate-200 hover:text-cyan-300 transition-colors duration-300 rounded-lg px-2 py-1 cursor-pointer">
