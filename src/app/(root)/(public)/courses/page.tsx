@@ -1,7 +1,10 @@
+import { CoursesPage } from "@/components/pages/courses-page/courses-page"
 
 
-export default function CoursesPage() {
+export default function Page() {
     return (
-        <div>CoursesPage</div>
+        <>
+            <CoursesPage />
+        </>
     )
 }
