@@ -22,7 +22,7 @@ export function HeroSection() {
                         <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold mb-6 leading-tight">
                             <span className="text-white">Master Tomorrow's</span>
                             <br />
-                            <span className="text-violet-300 min-h-[1.2em] inline-block">
+                            <span aria-label={displayText} className="text-violet-300 min-h-[1.2em] inline-block">
                                 {displayText}
                                 <span className="animate-pulse text-violet-400">|</span>
                             </span>
