@@ -5,8 +5,8 @@ import { Button } from "@/components/ui/button"
 
 interface CourseGridFooterProps {
     title: string
-    price: number
-    src: string | null
+    price?: number
+    src: string | null | undefined
     description: string
     children?: React.ReactNode
 }
@@ -18,7 +18,11 @@ export function CourseGridFooter({ title, price, src, description, children, }: 
                 <CardHeader>
                     <div className="flex items-center justify-between">
                         <CardTitle className="text-xl">{title} </CardTitle>
-                        <h1 className="font-semibold text-xl text-balance text-emerald-500">{formatPrice(price)}</h1>
+                        {price && (
+                            <div>
+                                <h1 className="font-semibold text-xl text-balance text-emerald-500">{formatPrice(price)}</h1>
+                            </div>
+                        )}
 
                     </div>
                 </CardHeader>
