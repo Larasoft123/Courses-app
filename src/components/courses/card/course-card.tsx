@@ -26,12 +26,12 @@ export function CourseCard({ course, index }: CourseCardProps) {
 
                 <div className="flex items-center justify-between mb-2">
                     <Badge variant="secondary" className="bg-primary/20 text-primary border-primary/30">
-                        {course.levels.name}
+                        {course.level_name}
                     </Badge>
                     <span className="text-2xl font-bold text-primary">{formatPrice(course.price)}</span>
                 </div>
 
-                <CardTitle className="text-xl group-hover:text-primary transition-colors">{course.name}</CardTitle>
+                <CardTitle className="text-xl group-hover:text-primary transition-colors">{course.course_title}</CardTitle>
                 <CardDescription className="text-muted-foreground">{course.description}</CardDescription>
             </CardHeader>
 
@@ -44,7 +44,7 @@ export function CourseCard({ course, index }: CourseCardProps) {
 
                     <div className="flex items-center gap-1">
                         <Book className="h-4 w-4" />
-                        {course.chapters[0].count}
+                        {course.chapters}
                     </div>
 
                     <div className="flex items-center gap-1">
@@ -53,7 +53,7 @@ export function CourseCard({ course, index }: CourseCardProps) {
                     </div>
                     <div className="flex items-center gap-1">
                         <Star className="h-4 w-4 fill-yellow-400 text-yellow-400" />
-                        {/* rating */}
+                        {course.rating}
                     </div>
                 </div>
 
