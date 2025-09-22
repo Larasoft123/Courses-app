@@ -65,6 +65,7 @@ export type Database = {
           id: number
           is_published: boolean
           title: string
+          video_url: string | null
         }
         Insert: {
           course_id: string
@@ -73,6 +74,7 @@ export type Database = {
           id?: number
           is_published?: boolean
           title: string
+          video_url?: string | null
         }
         Update: {
           course_id?: string
@@ -81,6 +83,7 @@ export type Database = {
           id?: number
           is_published?: boolean
           title?: string
+          video_url?: string | null
         }
         Relationships: [
           {
@@ -268,6 +271,45 @@ export type Database = {
           },
         ]
       }
+      users_progress: {
+        Row: {
+          chaper_id: number
+          created_at: string
+          id: number
+          is_completed: boolean
+          user_id: string
+        }
+        Insert: {
+          chaper_id: number
+          created_at?: string
+          id?: number
+          is_completed?: boolean
+          user_id: string
+        }
+        Update: {
+          chaper_id?: number
+          created_at?: string
+          id?: number
+          is_completed?: boolean
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "users_progress_chaper_id_fkey"
+            columns: ["chaper_id"]
+            isOneToOne: false
+            referencedRelation: "chapters"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "users_progress_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
     }
     Views: {
       [_ in never]: never
@@ -276,6 +318,25 @@ export type Database = {
       custom_access_token_hook: {
         Args: { event: Json }
         Returns: Json
+      }
+      get_courses: {
+        Args: { p_limit?: number; p_offset?: number }
+        Returns: {
+          category_name: string
+          chapters: number
+          course_id: string
+          course_title: string
+          created_at: string
+          description: string
+          duration: number
+          image_url: string
+          introduction_video_url: string
+          level_name: string
+          price: number
+          rating: number
+          slug: string
+          students: number
+        }[]
       }
       get_courses_for_user: {
         Args: { user_id_param: string }
