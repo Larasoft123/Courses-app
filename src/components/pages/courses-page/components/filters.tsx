@@ -35,45 +35,52 @@ export function Filters({ categories, levels }: FiltersProps) {
 
 
 
-    const handleCategoryChange = (isChecked: CheckedState, category: string) => {
+    const handleCheckboxChange = (
+        isChecked: CheckedState,
+        item: string,
+        filter: 'category' | 'level'
+    ) => {
+        // Reusable handler for both category and level filters.
+        const params = new URLSearchParams(searchParams.toString());
 
 
-        const params = new URLSearchParams(searchParams);
+        // Select the right state/setter based on filter
+        const currentSelected = filter === 'category' ? selectedCategories : selectedLevels;
+        const setCurrentSelected = filter === 'category' ? setSelectedCategories : setSelectedLevels;
+
+        // Helper to write the selected values into the URL params
+        const writeParams = (values: string[]) => {
+            params.delete(filter);
+            values.forEach((v) => params.append(filter, v));
+        };
 
         if (isChecked) {
-            params.append('category', category);
-
-
-            setSelectedCategories([...selectedCategories.filter(c => c !== 'all'), category]);
-
-
-        } else {
-            const nuevasCategorias = selectedCategories.filter((c) => c !== category)
-
-            if (nuevasCategorias.length === 0) {
-                setSelectedCategories(['all'])
-                params.delete('category');
+            // If user checked the "all" option, clear specific params and set state to ['all']
+            if (item === 'all') {
+                setCurrentSelected(['all']);
+                params.delete(filter);
             } else {
-                params.delete('category');
-                nuevasCategorias.forEach((c) => params.append('category', c));
-                setSelectedCategories(nuevasCategorias)
+                const next = [...currentSelected.filter((c) => c !== 'all'), item];
+                writeParams(next);
+                setCurrentSelected(next);
             }
-
-
-
-
-
-
+        } else {
+            // Unchecking
+            if (!(item === 'all')) {
+                const next = currentSelected.filter((c) => c !== item);
+                if (next.length === 0) {
+                    // If nothing remains, fallback to ['all'] behavior
+                    setCurrentSelected(['all']);
+                    params.delete(filter);
+                } else {
+                    writeParams(next);
+                    setCurrentSelected(next);
+                }
+            }
         }
 
         replace(`/courses?${params.toString()}`);
-
     }
-
-
-
-
-
 
 
 
@@ -84,18 +91,18 @@ export function Filters({ categories, levels }: FiltersProps) {
         } else {
             params.delete('search')
         }
-        replace(`?${params.toString()}`)
+        replace(`/courses?${params.toString()}`)
 
     }, 500)
 
     const handleFilterChange = (filter: string, value: string) => {
         const params = new URLSearchParams(searchParams.toString())
-        if (value = 'all') {
+        if (value === 'all') {
             params.delete(filter)
         } else {
             params.set(filter, value)
         }
-        replace(`?${params.toString()}`)
+        replace(`/courses?${params.toString()}`)
     }
 
 
@@ -127,7 +134,7 @@ export function Filters({ categories, levels }: FiltersProps) {
                     <Label className="hover:bg-accent/50 flex items-start gap-3 rounded-lg border p-3 has-[[aria-checked=true]]:border-blue-600 has-[[aria-checked=true]]:bg-blue-50 dark:has-[[aria-checked=true]]:border-blue-900 dark:has-[[aria-checked=true]]:bg-blue-950">
                         <Checkbox
                             value={'all'}
-
+                            onCheckedChange={(e) => handleCheckboxChange(e, 'all', 'category')}
                             aria-checked={selectedCategories.includes('all')}
                             checked={selectedCategories.includes('all')}
                             className="data-[state=checked]:border-blue-600 data-[state=checked]:bg-blue-600 data-[state=checked]:text-white dark:data-[state=checked]:border-blue-700 dark:data-[state=checked]:bg-blue-700"
@@ -144,7 +151,7 @@ export function Filters({ categories, levels }: FiltersProps) {
                         categories.map((category) => (
                             <Label key={category.id} className="hover:bg-accent/50 flex items-start gap-3 rounded-lg border p-3 has-[[aria-checked=true]]:border-blue-600 has-[[aria-checked=true]]:bg-blue-50 dark:has-[[aria-checked=true]]:border-blue-900 dark:has-[[aria-checked=true]]:bg-blue-950">
                                 <Checkbox
-                                    onCheckedChange={(e) => handleCategoryChange(e, category.name)}
+                                    onCheckedChange={(e) => handleCheckboxChange(e, category.name, 'category')}
                                     checked={selectedCategories.includes(category.name)}
                                     value={category.name}
                                     aria-checked={selectedCategories.includes(category.name)}
@@ -173,6 +180,7 @@ export function Filters({ categories, levels }: FiltersProps) {
                     <Label className="hover:bg-accent/50 flex items-start gap-3 rounded-lg border p-3 has-[[aria-checked=true]]:border-blue-600 has-[[aria-checked=true]]:bg-blue-50 dark:has-[[aria-checked=true]]:border-blue-900 dark:has-[[aria-checked=true]]:bg-blue-950">
                         <Checkbox
                             value={'all'}
+                            onCheckedChange={(e) => handleCheckboxChange(e, 'all', 'level')}
                             aria-checked={selectedLevels.includes('all')}
                             checked={selectedLevels.includes('all')}
                             className="data-[state=checked]:border-blue-600 data-[state=checked]:bg-blue-600 data-[state=checked]:text-white dark:data-[state=checked]:border-blue-700 dark:data-[state=checked]:bg-blue-700"
@@ -188,10 +196,10 @@ export function Filters({ categories, levels }: FiltersProps) {
                     {levels.map(level => (
                         <Label key={level.id} className="hover:bg-accent/50 flex items-start gap-3 rounded-lg border p-3 has-[[aria-checked=true]]:border-blue-600 has-[[aria-checked=true]]:bg-blue-50 dark:has-[[aria-checked=true]]:border-blue-900 dark:has-[[aria-checked=true]]:bg-blue-950">
                             <Checkbox
-                                onCheckedChange={(e) => handleCategoryChange(e, level.name)}
-                                checked={selectedCategories.includes(level.name)}
+                                onCheckedChange={(e) => handleCheckboxChange(e, level.name, 'level')}
+                                checked={selectedLevels.includes(level.name)}
                                 value={level.name}
-                                aria-checked={selectedCategories.includes(level.name)}
+                                aria-checked={selectedLevels.includes(level.name)}
                                 className="data-[state=checked]:border-blue-600 data-[state=checked]:bg-blue-600 data-[state=checked]:text-white dark:data-[state=checked]:border-blue-700 dark:data-[state=checked]:bg-blue-700"
                             />
                             <div className="grid gap-1.5 font-normal">
@@ -203,6 +211,7 @@ export function Filters({ categories, levels }: FiltersProps) {
                         </Label>
 
                     ))}
+
 
 
 
