@@ -15,12 +15,12 @@ export async function Header() {
             className={`fixed top-0 animation-header-scroll  w-full z-50 transition-all duration-300 `}
         >
             <div className="container mx-auto px-4 py-4 flex items-center justify-between">
-                <div className="flex items-center space-x-2">
+                <Link href={"/"} className="flex items-center space-x-2">
                     <div className="w-8 h-8 bg-gradient-to-br from-primary to-accent rounded-lg animate-glow"></div>
                     <span className="text-xl font-bold bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
                         FutureLearn
                     </span>
-                </div>
+                </Link>
 
                 <nav className="hidden md:flex items-center space-x-8">
                     <Link href="/courses" className="text-foreground hover:text-primary transition-colors">
