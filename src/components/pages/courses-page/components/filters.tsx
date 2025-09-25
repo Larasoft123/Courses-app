@@ -82,7 +82,18 @@ export function Filters({ categories, levels }: FiltersProps) {
         replace(`/courses?${params.toString()}`);
     }
 
+    const clearFilters = () => {
+        const params = new URLSearchParams(searchParams.toString())
+        setSelectedCategories(['all'])
+        setSelectedLevels(['all'])
+        params.delete("category")
+        params.delete("level")
+        params.delete("search")
+        params.delete("rating")
 
+        replace(`/courses?${params.toString()}`)
+
+    }
 
     const setSearchTerm = useDebouncedCallback((searchTerm: string) => {
         const params = new URLSearchParams(searchParams.toString())
@@ -131,6 +142,7 @@ export function Filters({ categories, levels }: FiltersProps) {
                 <Label className="text-sm font-medium">categorias</Label>
 
                 <div className="flex flex-col gap-y-2">
+
                     <Label className="hover:bg-accent/50 flex items-start gap-3 rounded-lg border p-3 has-[[aria-checked=true]]:border-blue-600 has-[[aria-checked=true]]:bg-blue-50 dark:has-[[aria-checked=true]]:border-blue-900 dark:has-[[aria-checked=true]]:bg-blue-950">
                         <Checkbox
                             value={'all'}
@@ -240,7 +252,7 @@ export function Filters({ categories, levels }: FiltersProps) {
             </div>
 
             {/* Clear Filters */}
-            <Button variant="outline" className="w-full h-11 mt-6 bg-transparent">
+            <Button variant="outline" onClick={clearFilters} className="w-full h-11 mt-6 bg-transparent">
                 <X className="h-4 w-4 mr-2" />
                 Clear Filters
             </Button>
