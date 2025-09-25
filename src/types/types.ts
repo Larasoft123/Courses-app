@@ -93,6 +93,13 @@ export type Database = {
             referencedRelation: "courses"
             referencedColumns: ["id"]
           },
+          {
+            foreignKeyName: "chapters_course_id_fkey"
+            columns: ["course_id"]
+            isOneToOne: false
+            referencedRelation: "user_course_progress"
+            referencedColumns: ["course_id"]
+          },
         ]
       }
       courses: {
@@ -227,6 +234,13 @@ export type Database = {
             referencedRelation: "courses"
             referencedColumns: ["id"]
           },
+          {
+            foreignKeyName: "purchases_course_id_fkey"
+            columns: ["course_id"]
+            isOneToOne: false
+            referencedRelation: "user_course_progress"
+            referencedColumns: ["course_id"]
+          },
         ]
       }
       testimonials: {
@@ -263,6 +277,13 @@ export type Database = {
             referencedColumns: ["id"]
           },
           {
+            foreignKeyName: "testimonials_course_id_fkey"
+            columns: ["course_id"]
+            isOneToOne: false
+            referencedRelation: "user_course_progress"
+            referencedColumns: ["course_id"]
+          },
+          {
             foreignKeyName: "testimonials_user_id_fkey"
             columns: ["user_id"]
             isOneToOne: false
@@ -273,21 +294,21 @@ export type Database = {
       }
       users_progress: {
         Row: {
-          chaper_id: number
+          chapter_id: number
           created_at: string
           id: number
           is_completed: boolean
           user_id: string
         }
         Insert: {
-          chaper_id: number
+          chapter_id: number
           created_at?: string
           id?: number
           is_completed?: boolean
           user_id: string
         }
         Update: {
-          chaper_id?: number
+          chapter_id?: number
           created_at?: string
           id?: number
           is_completed?: boolean
@@ -296,7 +317,7 @@ export type Database = {
         Relationships: [
           {
             foreignKeyName: "users_progress_chaper_id_fkey"
-            columns: ["chaper_id"]
+            columns: ["chapter_id"]
             isOneToOne: false
             referencedRelation: "chapters"
             referencedColumns: ["id"]
@@ -312,7 +333,28 @@ export type Database = {
       }
     }
     Views: {
-      [_ in never]: never
+      user_course_progress: {
+        Row: {
+          completed_chapters: number | null
+          course_id: string | null
+          created_at: string | null
+          image_url: string | null
+          name: string | null
+          progress_percentage: number | null
+          slug: string | null
+          total_chapters: number | null
+          user_id: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "users_progress_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
     }
     Functions: {
       custom_access_token_hook: {
@@ -320,7 +362,13 @@ export type Database = {
         Returns: Json
       }
       get_courses: {
-        Args: { p_limit?: number; p_offset?: number }
+        Args: {
+          minimum_rating?: number
+          p_categorys?: string[]
+          p_levels?: string[]
+          p_limit?: number
+          p_offset?: number
+        }
         Returns: {
           category_name: string
           chapters: number
@@ -341,19 +389,23 @@ export type Database = {
       get_courses_for_user: {
         Args: { user_id_param: string }
         Returns: {
-          category_id: number
+          completed_chapters: number
+          course_name: string
           created_at: string
-          description: string
-          duration: number
           id: string
-          image_url: string | null
-          introduction_video_url: string | null
-          level_id: number
-          name: string
-          price: number
+          image_url: string
+          progress_percentage: number
           slug: string
-          students: number
+          total_chapters: number
         }[]
+      }
+      get_courses_total_pages: {
+        Args: {
+          minimum_rating?: number
+          p_categorys?: string[]
+          p_levels?: string[]
+        }
+        Returns: number
       }
       get_current_user_role: {
         Args: Record<PropertyKey, never>
