@@ -1,10 +1,15 @@
 import { CoursesPage } from "@/components/pages/courses-page/courses-page"
+import { CoursesFilters } from "@/types/courses-url-filters.types"
 
 
-export default function Page() {
+export default async function Page({ searchParams }: {
+    searchParams: Promise<CoursesFilters>
+}) {
+
+
     return (
         <>
-            <CoursesPage />
+            <CoursesPage params={searchParams} />
         </>
     )
 }
