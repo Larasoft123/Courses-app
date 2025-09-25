@@ -6,7 +6,7 @@ import { CoursesFilters } from "@/types/courses-url-filters.types"
 
 
 
-export async function getCourses({levels,page,category}: CoursesFilters): Promise<Course[]> {
+export async function getCourses({levels,page,category}: CoursesFilters): Promise<{ totalPages: number, courses: Course[] }> {
     try {
         const seachParams = new URLSearchParams()
         
@@ -26,16 +26,21 @@ export async function getCourses({levels,page,category}: CoursesFilters): Promis
       
         
         const response = await fetch(`${config.ENV.BASE_URL}/api/courses?${seachParams.toString()}`)
-        const data = (await response.json() as Course[] )
+        const data = (await response.json())
+        
+        
         
         
 
         
-        return data
+        return {totalPages: data.totalPages, courses: data.data}
     } catch (error) {
         console.log(error );
         
-        return  []
+        return  {
+            courses: [],
+            totalPages: 0
+        }
         
     }
     
