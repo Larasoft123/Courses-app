@@ -31,21 +31,45 @@ export async function GET(req:NextRequest) {
             p_offset: offset
         })
 
-        console.log(data );
+        const result = await supabase.rpc("get_courses_total_pages",{
+            minimum_rating: rating,
+            p_categorys: category,
+            p_levels: [level],
+        }
+
+        )
+
+
+      
+
+        
+        
+
+        
+        
+        
+
+
+  
         
       
 
-        if (error || !data){
+        if ((error || !data) || (!result.data || result.error) ){
             return NextResponse.json({error})
         }
 
+        const totalPages = Math.ceil(result.data / limit)
+     
+
+        
+
 
   
   
         
         
 
-        return NextResponse.json(data)
+        return NextResponse.json({data, totalPages})
         
     } catch (error) {
         console.log(error);
