@@ -5,6 +5,7 @@ import { useSearchParams, useRouter } from 'next/navigation'
 
 
 
+
 export function Pagination({ currentPage, totalPages }: { currentPage: number, totalPages: number }) {
     const { replace } = useRouter()
     const searchParams = useSearchParams()
@@ -12,6 +13,21 @@ export function Pagination({ currentPage, totalPages }: { currentPage: number, t
 
     const setCurrentPage = (page: number) => {
         const params = new URLSearchParams(searchParams.toString())
+
+
+        if (page <= 1) {
+            params.delete('page')
+            replace(`?${params.toString()}`)
+            return
+
+        }
+
+        if (page > totalPages) {
+            return
+        }
+
+
+
         params.set('page', page.toString())
         replace(`?${params.toString()}`)
     }
@@ -30,17 +46,20 @@ export function Pagination({ currentPage, totalPages }: { currentPage: number, t
             </Button>
 
             <div className="flex items-center gap-2.5">
-                {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
-                    <Button
-                        key={page}
-                        variant={currentPage === page ? "default" : "outline"}
-                        size="sm"
-                        onClick={() => setCurrentPage(page)}
-                        className="w-10 h-10"
-                    >
-                        {page}
-                    </Button>
-                ))}
+                {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => {
+
+                    return (
+                        <Button
+                            key={page}
+                            variant={currentPage === page ? "default" : "outline"}
+                            size="sm"
+                            onClick={() => setCurrentPage(page)}
+                            className="w-10 h-10"
+                        >
+                            {page}
+                        </Button>
+                    )
+                })}
             </div>
 
             <Button
