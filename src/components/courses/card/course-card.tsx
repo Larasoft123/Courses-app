@@ -25,9 +25,14 @@ export function CourseCard({ course, index }: CourseCardProps) {
                 </div>
 
                 <div className="flex items-center justify-between mb-2">
-                    <Badge variant="secondary" className="bg-primary/20 text-primary border-primary/30">
-                        {course.level_name}
-                    </Badge>
+                    <div className="gap-x-2.5 flex">
+                        <Badge variant="default">
+                            {course.level_name}
+                        </Badge>
+                        <Badge variant={"default"} >
+                            {course.category_name}
+                        </Badge>
+                    </div>
                     <span className="text-2xl font-bold text-primary">{formatPrice(course.price)}</span>
                 </div>
 
