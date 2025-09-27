@@ -556,3 +556,5 @@ export const Constants = {
 export type Roles = typeof Constants.public.Enums.app_role[number]
 
   
+export type category = Database["public"]["Tables"]["categories"]["Row"]
+export type level = Database["public"]["Tables"]["levels"]["Row"]
